@@ -57,7 +57,7 @@ public class ComposeFragment extends Fragment {
     public ComposeFragment() {
         // Required empty public constructor
     }
-    
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
