@@ -1,5 +1,6 @@
 package com.example.instagramclone.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,13 +14,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
+import com.example.instagramclone.LoginActivity;
 import com.example.instagramclone.Post;
 import com.example.instagramclone.PostsAdapter;
 import com.example.instagramclone.R;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import org.json.JSONArray;
 
@@ -32,6 +36,7 @@ public class PostsFragment extends Fragment {
 
     private RecyclerView rvPosts;
     private SwipeRefreshLayout swipeContainer;
+    private Button btnSignout;
     protected PostsAdapter adapter;
     protected List<Post> allPosts;
 
@@ -66,7 +71,18 @@ public class PostsFragment extends Fragment {
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
-
+        btnSignout = view.findViewById(R.id.btnSignout);
+        btnSignout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ParseUser.logOut();
+                ParseUser currentUser = ParseUser.getCurrentUser(); // this will now be null
+                Intent intent = new Intent(getContext(), LoginActivity.class);
+                startActivity(intent);
+                //getActivity().startService(intent);
+                getActivity().finish();
+            }
+        });
         allPosts = new ArrayList<>();
         adapter = new PostsAdapter(getContext(), allPosts);
         rvPosts.setAdapter(adapter);
