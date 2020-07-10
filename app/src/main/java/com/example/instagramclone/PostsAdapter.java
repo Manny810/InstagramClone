@@ -2,6 +2,7 @@ package com.example.instagramclone;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +18,9 @@ import com.parse.ParseFile;
 
 import org.parceler.Parcels;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
 public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
     public static final String TAG = "PostsAdapter";
@@ -62,6 +65,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
         private TextView tvUsername;
         private ImageView ivImage;
         private TextView tvDescription;
+        private TextView tvTime;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -69,7 +73,25 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
             tvUsername = itemView.findViewById(R.id.tvUsername);
             ivImage = itemView.findViewById(R.id.ivImage);
             tvDescription = itemView.findViewById(R.id.tvDescription);
+            tvTime = itemView.findViewById(R.id.tvTime);
             itemView.setOnClickListener(this);
+        }
+        // getRelativeTimeAgo("Mon Apr 01 21:16:23 +0000 2014");
+        public String getRelativeTimeAgo(String rawJsonDate) {
+            String twitterFormat = "EEE MMM dd HH:mm:ss ZZZZZ yyyy";
+            SimpleDateFormat sf = new SimpleDateFormat(twitterFormat, Locale.ENGLISH);
+            sf.setLenient(true);
+
+            String relativeDate = "";
+            try {
+                long dateMillis = sf.parse(rawJsonDate).getTime();
+                relativeDate = DateUtils.getRelativeTimeSpanString(dateMillis,
+                        System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS).toString();
+            } catch (java.text.ParseException e) {
+                e.printStackTrace();
+            }
+
+            return relativeDate;
         }
 
         public void bind(Post post) {
@@ -80,6 +102,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
             if (image != null){
                 Glide.with(context).load(image.getUrl()).into(ivImage);
             }
+            tvTime.setText(getRelativeTimeAgo(post.getCreatedAt().toString())); 
 
         }
 

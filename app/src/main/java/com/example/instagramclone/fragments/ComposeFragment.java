@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.instagramclone.MainActivity;
@@ -50,6 +51,7 @@ public class ComposeFragment extends Fragment {
     private Button btnCaptureImage;
     private ImageView ivPostImage;
     private Button btnSubmit;
+    private ProgressBar pb;
 
     private File photoFile;
     public String photoFileName = "photo.jpg";
@@ -73,6 +75,7 @@ public class ComposeFragment extends Fragment {
         btnCaptureImage = view.findViewById(R.id.btnCaptureImage);
         ivPostImage = view.findViewById(R.id.ivPostImage);
         btnSubmit = view.findViewById(R.id.btnSubmit);
+        pb = (ProgressBar) view.findViewById(R.id.pbLoading);
 
         btnCaptureImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -156,6 +159,7 @@ public class ComposeFragment extends Fragment {
     }
 
     private void savePost(String description, ParseUser currentUser, File photoFile) {
+        pb.setVisibility(ProgressBar.VISIBLE);
         Post post = new Post();
         post.setDescription(description);
         post.setImage(new ParseFile(photoFile));
@@ -166,12 +170,15 @@ public class ComposeFragment extends Fragment {
                 if (e != null){
                     Log.e(TAG, "Error while saving", e);
                     Toast.makeText(getContext(), "Error while saving!", Toast.LENGTH_SHORT).show();
+                    pb.setVisibility(ProgressBar.INVISIBLE);
                 }
                 Log.i(TAG, "Post save was successful!");
                 etDescription.setText("");
                 ivPostImage.setImageResource(0);
+                pb.setVisibility(ProgressBar.INVISIBLE);
             }
         });
+
     }
 
 }

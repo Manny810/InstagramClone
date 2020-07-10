@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,15 +31,17 @@ import com.parse.ParseUser;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import okhttp3.Headers;
 
 public class PostsFragment extends Fragment {
 
     public static final String TAG = "PostsFragment";
-    public static final int POST_LIMIT = 3;
+    public static final int POST_LIMIT = 20;
 
     private RecyclerView rvPosts;
     private SwipeRefreshLayout swipeContainer;
@@ -160,4 +163,5 @@ public class PostsFragment extends Fragment {
             }
         });
     }
+
 }
