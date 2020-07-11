@@ -102,9 +102,9 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
             if (image != null){
                 Glide.with(context).load(image.getUrl()).into(ivImage);
             }
-            tvTime.setText(getRelativeTimeAgo(post.getCreatedAt().toString())); 
-
+            tvTime.setText(getRelativeTimeAgo(post.getCreatedAt().toString()));
         }
+
 
         // when the user clicks on a row, show MovieDetailsActivity for the selected movie
         @Override
