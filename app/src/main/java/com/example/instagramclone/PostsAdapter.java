@@ -75,6 +75,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
             tvDescription = itemView.findViewById(R.id.tvDescription);
             tvTime = itemView.findViewById(R.id.tvTime);
             itemView.setOnClickListener(this);
+
         }
         // getRelativeTimeAgo("Mon Apr 01 21:16:23 +0000 2014");
         public String getRelativeTimeAgo(String rawJsonDate) {

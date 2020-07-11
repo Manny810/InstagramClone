@@ -110,7 +110,7 @@ public class PostsFragment extends Fragment {
         queryPosts();
     }
 
-    private void loadNextDataFromApi(int page) {
+    protected void loadNextDataFromApi(int page) {
         // Send an API request to retrieve appropriate paginated data
         //  --> Send the request including an offset value (i.e `page`) as a query parameter.
         //  --> Deserialize and construct new model objects from the API response
